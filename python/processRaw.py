@@ -1,3 +1,8 @@
+"""
+    author: Anurag Verma
+    license: MIT
+    This file generates a normalized dataset containing the coordinates of landmarks of hands in range 0 to 1
+"""
 import numpy as np
 import pandas as pd
 import os
