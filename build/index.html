@@ -1,0 +1,199 @@
+<html>
+    <head>
+        <title>Rock Paper Scissors</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <!-- Native CSS and Bootstrap -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="main.css" />
+        <link rel="icon" href="assets/icon.png" />
+        <!-- Tensorflow JS  -->
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+        <script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0/dist/tf-core.js"></script>
+        <script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0/dist/tf-converter.js"></script>
+        <script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
+        <script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6/dist/handpose.js"></script>
+    </head>
+    <body>
+        <div class="modal-custom p-4 pr-3 pl-5" id="help-modal">
+            <div class="float-right">
+                <button class="btn custom" id="close">&times;</button>
+            </div>
+            <div class="row d-flex justify-content-center mt-5 pt-2">
+                <span class="cartoon">About this Game</span>
+            </div>
+            <div class="row d-flex justify-content-center mt-3 mr-2">
+                <span class="intro-hero text-center mt-3">
+                    This games is built with Machine Learning. Whatever handpose
+                    you make at the camera a neural network tries to determine
+                    the coordinates of different points on the hand. And those
+                    coordinates are again fed into another neural network which
+                    predicts Stone, Paper or Scissors.
+                    <br /><br />
+                    All the magic happens on your device right inside your
+                    browser. No data is sent anywhere. This was made possible
+                    because of
+                    <a href="https://www.tensorflow.org/js" target="_blank"
+                        >tensorflow.js</a
+                    ><br /><br />
+                    If you liked the project then consider starring it on
+                    <a
+                        href="https://github.com/whoanuragverma/rock-paper-scissor"
+                        target="_blank"
+                        >GitHub</a
+                    >. <br /><br />
+                    <br />
+                    Open Source Resources that helped this project:
+                    <li>
+                        <a
+                            href="http://www.laurencemoroney.com/rock-paper-scissors-dataset/"
+                            target="_blank"
+                            >Rock Paper Scissors Dataset - Laurence Monorey</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/tensorflow/tfjs-models"
+                            target="_blank"
+                            >Handpose tfjs - model</a
+                        >
+                    </li>
+                </span>
+            </div>
+        </div>
+        <div class="modal-custom load-screen p-4 pl-5 pr-5" id="play-modal">
+            <div class="row d-flex justify-content-center">
+                <span class="intro-hero pt-5 mt-5" id="camera">
+                    To continue, You'll need to allow access to the Camera.
+                </span>
+            </div>
+            <div id="load-block">
+                <div class="row d-flex justify-content-center">
+                    <span class="cartoon pt-3 mt-2 text-center">
+                        Just a moment, getting things ready.
+                    </span>
+                </div>
+                <div class="row d-flex justify-content-center mt-4 pt-4">
+                    <div class="spinner-border text-dark" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <span class="intro-hero mt-3 pt-3 text-small">
+                        This may take a while
+                    </span>
+                </div>
+            </div>
+        </div>
+        <section id="home">
+            <div class="container-fluid">
+                <button class="btn custom d-block help m-3 mt-4" id="help">
+                    ?
+                </button>
+                <div class="d-flex justify-content-center">
+                    <img
+                        src="assets/base-icon.png"
+                        alt="base-icon"
+                        class="img-fluid"
+                    />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="info-text">
+                        <span class="text-uppercase pink p-1">Rock</span>
+                        <span class="text-uppercase yellow p-1">paper</span>
+                        <span class="text-uppercase blue p-1">Scissors</span>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <span class="cartoon text-center">
+                        Can a neural network recognize gestures?</span
+                    >
+                </div>
+                <div class="row justify-content-center p-3">
+                    <span class="intro-hero text-center"
+                        >This project is a simple implementation of Rock Paper
+                        Scissors which takes live video feed from Camera and
+                        uses on device Neural Network to determine your move.
+                        Everything happens on device; no data is sent
+                        anywhere.</span
+                    >
+                </div>
+                <div class="row justify-content-center mt-4 mb-5 pb-5">
+                    <button type="button" class="btn custom" id="play">
+                        Let's Play!
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section id="game">
+            <div class="d-flex justify-content-center mt-3">
+                <div class="info-text">
+                    <span class="text-uppercase pink p-1">Rock</span>
+                    <span class="text-uppercase yellow p-1">paper</span>
+                    <span class="text-uppercase blue p-1">Scissors</span>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div
+                        class="col-12 col-md-6 p-5 d-flex justify-content-center"
+                    >
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center"">
+                            <div class="info-text">You</div>
+                        </div>
+                        <div
+                            class="col-12 d-flex justify-content-center mt-3 pt-2"
+                        >
+                            <canvas height="300"></canvas>
+                        </div>
+                        <div
+                            class="col-12 d-flex justify-content-center mt-3 info-text"
+                            id="predction"
+                        ></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 p-5 d-flex justify-content-center">
+                    <div class="info-text">Computer</div>
+                </div>
+            </div>
+            <div class="row float-left video">
+                <video></video>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container p-2">
+                <a
+                    class="btn-ftr"
+                    href="https://github.com/whoanuragverma/rock-paper-scissor"
+                    target="_blank"
+                >
+                    <svg
+                        width="1.3em"
+                        height="1.3em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-code mb-1"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm4.292 0a.5.5 0 0 0 0 .708L13.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"
+                        />
+                    </svg>
+                    GitHub
+                </a>
+                <span class="float-right">Made with ❤ by Anurag Verma</span>
+            </div>
+        </footer>
+        <script src="index.js"></script>
+    </body>
+</html>
