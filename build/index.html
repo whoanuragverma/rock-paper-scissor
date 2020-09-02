@@ -13,7 +13,7 @@
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="main.min.css" />
         <link rel="icon" href="assets/icon.png" />
         <!-- Tensorflow JS  -->
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
@@ -144,7 +144,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div
-                        class="col-12 col-md-6 p-5 d-flex justify-content-center"
+                        class="col-12 col-md-6 p-5 d-flex justify-content-center border"
                     >
                         <div class="row">
                             <div class="col-12 d-flex justify-content-center"">
@@ -153,7 +153,7 @@
                         <div
                             class="col-12 d-flex justify-content-center mt-3 pt-2"
                         >
-                            <canvas height="300"></canvas>
+                            <canvas></canvas>
                         </div>
                         <div
                             class="col-12 d-flex justify-content-center mt-3 info-text"
@@ -161,12 +161,39 @@
                         ></div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 p-5 d-flex justify-content-center">
-                    <div class="info-text">Computer</div>
+                <div
+                    class="col-12 col-md-6 p-5 d-flex justify-content-center border"
+                >
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="info-text">Computer</div>
+                        </div>
+                        <div
+                            class="col-12 d-flex justify-content-center mt-5 pt-5"
+                            id="computer"
+                        ></div>
+                        <div
+                            class="col-12 d-flex justify-content-center mt-5 info-text pt-5"
+                            id="computer_res"
+                        ></div>
+                    </div>
                 </div>
-            </div>
-            <div class="row float-left video">
-                <video></video>
+                <div class="container-fluid">
+                    <div class="row mt-2">
+                        <div
+                            class="col-12 d-flex justify-content-center info-text"
+                        >
+                            PS: You will never win. 😢
+                        </div>
+                    </div>
+                </div>
+                <div class="row float-left video">
+                    <video></video>
+                </div>
+
+                <div class="row float-left video">
+                    <video></video>
+                </div>
             </div>
         </section>
         <footer class="footer">
@@ -194,6 +221,6 @@
                 <span class="float-right">Made with ❤ by Anurag Verma</span>
             </div>
         </footer>
-        <script src="index.js"></script>
+        <script src="index.min.js"></script>
     </body>
 </html>

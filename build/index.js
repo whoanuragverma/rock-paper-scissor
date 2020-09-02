@@ -81,14 +81,15 @@ async function getCoordinates() {
         const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 300, 300);
-        document.querySelector("#predction").innerText = "";
+        document.querySelector("#predction").innerText = "\u00A0";
+        document.querySelector("#computer").innerText = "\u00A0";
+        document.querySelector("#computer_res").innerText = "\u00A0";
     }
 }
 
 function renderPoints(landmarks) {
     const canvas = document.querySelector("canvas");
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.height = window.innerHeight * 0.4;
     const ctx = canvas.getContext("2d");
     ctx.fillStyle = "red";
     for (var i = 0; i < landmarks.length; i++) {
@@ -110,15 +111,10 @@ function getOutcome(landmarks) {
         .predict(tf.tensor(temp, [21, 2]).expandDims((axis = 0)))
         .arraySync();
     const t = res[0].indexOf(Math.max(...res[0]));
-    switch (t) {
-        case 0:
-            document.querySelector("#predction").innerText = "Paper";
-            break;
-        case 1:
-            document.querySelector("#predction").innerText = "Rock";
-            break;
-        case 2:
-            document.querySelector("#predction").innerText = "Scissor";
-            break;
-    }
+    const user = ["Paper", "Rock", "Scissors"];
+    document.querySelector("#predction").innerText = user[t];
+    const emojis = ["✌", "✋", "✊"];
+    const text = ["Scissors", "Paper", "Rock"];
+    document.querySelector("#computer").innerText = emojis[t];
+    document.querySelector("#computer_res").innerText = text[t];
 }

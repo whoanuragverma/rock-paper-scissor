@@ -128,6 +128,9 @@ video {
     font-weight: 400;
     letter-spacing: -0.1em;
 }
+#computer {
+    font-size: 4em;
+}
 @media only screen and (max-width: 600px) {
     .info-text {
         font-size: 1em;
@@ -141,5 +144,8 @@ video {
     .modal-custom.load-screen .cartoon {
         font-size: 1.8em;
         max-width: 100%;
+    }
+    .video {
+        display: none;
     }
 }
